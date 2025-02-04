@@ -1,0 +1,142 @@
+-- Робоча програма на Lua, що демонструє правила оформлення коду
+
+-- Рекомендація 1: Використовуйте осмислені назви змінних, функцій та класів
+-- Поганий приклад
+function f(a)
+    return a * 2
+end
+local x = f(10)
+
+-- Гарний приклад
+function multiplyByTwo(number)
+    return number * 2
+end
+local result = multiplyByTwo(10)
+
+-- Рекомендація 2: Дотримуйтеся чіткої структури коду
+-- Поганий приклад
+function processData(data)
+    print("Processing data...")
+    print("Data size: " .. #data)
+    for i = 1, #data do
+        print("Element " .. i .. ": " .. data[i])
+    end
+end
+
+-- Гарний приклад (поділ на логічні частини)
+function printDataInfo(data)
+    print("Processing data...")
+    print("Data size: " .. #data)
+end
+
+function printDataElements(data)
+    for i = 1, #data do
+        print("Element " .. i .. ": " .. data[i])
+    end
+end
+
+function processDataImproved(data)
+    printDataInfo(data)
+    printDataElements(data)
+end
+
+-- Рекомендація 3: Оптимізація продуктивності
+-- Поганий приклад (зайва копія масиву)
+function sumArrayBad(arr)
+    local copy = {}
+    for i, v in ipairs(arr) do
+        copy[i] = v
+    end
+    local sum = 0
+    for _, v in ipairs(copy) do
+        sum = sum + v
+    end
+    return sum
+end
+
+-- Гарний приклад (робота напряму з переданими даними)
+function sumArray(arr)
+    local sum = 0
+    for _, v in ipairs(arr) do
+        sum = sum + v
+    end
+    return sum
+end
+
+-- Рекомендація 4: Використовуйте обробку помилок
+-- Поганий приклад
+function riskyFunction()
+    error("Something went wrong!")
+end
+-- riskyFunction() -- призведе до краху
+
+-- Гарний приклад (обробка помилки через pcall)
+function safeFunction()
+    local status, err = pcall(riskyFunction)
+    if not status then
+        print("Caught an error: " .. err)
+    end
+end
+
+-- Рекомендація 5: Дотримуйтеся парадигм програмування
+-- Поганий приклад (процедурний підхід)
+function process()
+    local data = {1, 2, 3}
+    for i = 1, #data do
+        print("Value: " .. data[i])
+    end
+end
+
+-- Гарний приклад (об'єктно-орієнтований підхід через таблиці)
+DataProcessor = {}
+function DataProcessor:process(data)
+    for i = 1, #data do
+        print("Value: " .. data[i])
+    end
+end
+
+local processor = DataProcessor
+processor:process({1, 2, 3})
+
+-- Рекомендація 6: Тестування коду та документування
+-- Поганий приклад
+function add(a, b)
+    return a + b
+end
+-- Відсутні тести і документація
+
+-- Гарний приклад (додаємо документацію і тести)
+--- Додає два числа.
+-- @param a Перше число
+-- @param b Друге число
+-- @return Сума чисел
+function addDocumented(a, b)
+    return a + b
+end
+
+-- Простий юніт-тест
+function testAdd()
+    assert(addDocumented(2, 3) == 5, "Test failed: addDocumented(2,3) should be 5")
+    print("Test passed: addDocumented(2,3) == 5")
+end
+
+testAdd()
+
+-- Основна програма
+function runProgram()
+    print("Testing Lua best practices")
+
+    -- Використання правильної структури коду
+    processDataImproved({1, 2, 3, 4})
+
+    -- Використання безпечної функції
+    safeFunction()
+
+    -- Використання оптимізованої функції суми масиву
+    print("Sum of array:", sumArray({1, 2, 3, 4, 5}))
+
+    -- Використання ООП у Lua
+    processor:process({5, 10, 15})
+end
+
+runProgram()
